@@ -1,11 +1,9 @@
-FROM amazon/aws-cli:latest
+FROM alpine:latest
 
-RUN yum install -y cronie tar && yum clean all
+RUN apk add --no-cache aws-cli tar supercronic
 
 COPY dirbackup.sh /dirbackup.sh
-COPY crontab.dirbackup.txt /etc/cron.d/dir-backup
+RUN chmod +x /dirbackup.sh
+COPY crontab.dirbackup.txt /crontab.txt
 
-RUN chmod 0644 /etc/cron.d/dir-backup && crontab /etc/cron.d/dir-backup
-
-ENTRYPOINT []
-CMD ["crond", "-n"]
+CMD ["supercronic", "/crontab.txt"]

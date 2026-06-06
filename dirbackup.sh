@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 export $(printenv | grep -E 'R2|PROJECT|BACKUP' | xargs)
